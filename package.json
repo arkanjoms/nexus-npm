@@ -1,0 +1,35 @@
+{
+  "name": "nexus-npm",
+  "version": "0.0.1",
+  "description": "Sonatype Nexus deployer for npm",
+  "author": "Rafael Ramos de Oliveira",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.10.3"
+  },
+  "main": "nexus-deploy.js",
+  "bin": {
+    "nexus-npm": "nexus-npm.js"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/mocha -w"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "fs-extra": "^3.0.1",
+    "module-log": "^1.0.1",
+    "moment": "^2.18.1",
+    "path": "^0.12.7",
+    "properties-reader": "0.0.15",
+    "shelljs": "^0.7.7",
+    "yargs": "^8.0.1"
+  },
+  "publishConfig": {
+    "registry": "http://nexus.azi.com.br/repository/azi-npm/"
+  },
+  "devDependencies": {
+    "chai": "^4.0.1",
+    "mocha": "^3.4.2",
+    "should": "^11.2.1"
+  }
+}
