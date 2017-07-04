@@ -31,5 +31,9 @@
     "chai": "^4.0.1",
     "mocha": "^3.4.2",
     "should": "^11.2.1"
+  },
+  "distributionManagement": {
+    "releaseRegistry": "http://nexus.azi.com.br/repository/azi-npm/",
+    "snapshotRegistry": "http://nexus.azi.com.br/repository/azi-npm-snapshot/"
   }
 }
