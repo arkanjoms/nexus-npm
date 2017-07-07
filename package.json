@@ -1,6 +1,6 @@
 {
   "name": "nexus-npm",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Sonatype Nexus deployer for npm",
   "author": "Rafael Ramos de Oliveira",
   "license": "MIT",
