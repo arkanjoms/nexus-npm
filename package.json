@@ -29,7 +29,7 @@
     "yargs": "^8.0.1"
   },
   "publishConfig": {
-    "registry": "http://nexus.azi.com.br/repository/azi-npm/"
+    "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
     "chai": "^4.0.1",
