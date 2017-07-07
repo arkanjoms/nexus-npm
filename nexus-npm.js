@@ -4,14 +4,14 @@ var commander = require('commander');
 var util = require('./app/util');
 var commands = require('./app/commands');
 
-commander.version('0.0.1-SNAPSHOT')
+commander.version('0.0.1')
     .option('-c, --commitPrefix [commigPrefix]', 'Prefix for commit message. Deafault is "[nexus-npm] -".')
     .option('-r, --release', 'Create new release.')
     .option('-t, --tag [tag]', 'New tag name. If not informed, the version of package.json will be used.')
     .parse(process.argv);
 
 commander.command('verify')
-    .description('verifica se as propriedades foram configuradas.')
+    .description('Checks if the properties have been configured correctly.')
     .action(function () {
             util.execCommand(function () {
                 commands.verify();
@@ -20,7 +20,7 @@ commander.command('verify')
     );
 
 commander.command('deploy')
-    .description('executa o deploy no repositório de releases.')
+    .description('Generates a new deploy.')
     .action(function () {
             util.execCommand(function () {
                 commands.deploy();
@@ -29,7 +29,7 @@ commander.command('deploy')
     );
 
 commander.command('clean')
-    .description('Clean temporary files')
+    .description('Clean temporary files.')
     .action(function () {
         util.execCommand(function () {
             commands.clean();
@@ -37,7 +37,7 @@ commander.command('clean')
     });
 
 commander.command('rollback')
-    .description('Rollback configuration.')
+    .description('Rollback package.json')
     .action(function () {
         util.execCommand(function () {
             commands.rollback();

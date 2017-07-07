@@ -1,6 +1,6 @@
 # nexus-npm
 
-Node module to deploy artifact in sonatype nexus.
+Node module to deploy artifact in sonatype nexus like maven-release-plugin.
 
 #### Requeriments
 
