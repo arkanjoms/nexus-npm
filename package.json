@@ -1,6 +1,6 @@
 {
   "name": "nexus-npm",
-  "version": "0.0.2-SNAPSHOT",
+  "version": "0.0.1-SNAPSHOT",
   "description": "Sonatype Nexus deployer for npm",
   "author": "Rafael Ramos de Oliveira",
   "license": "MIT",
@@ -13,6 +13,10 @@
   },
   "scripts": {
     "test": "node_modules/.bin/mocha -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:arkanjoms/nexus-npm.git"
   },
   "dependencies": {
     "commander": "^2.9.0",
@@ -31,9 +35,5 @@
     "chai": "^4.0.1",
     "mocha": "^3.4.2",
     "should": "^11.2.1"
-  },
-  "distributionManagement": {
-    "releaseRegistry": "http://nexus.azi.com.br/repository/azi-npm/",
-    "snapshotRegistry": "http://nexus.azi.com.br/repository/azi-npm-snapshot/"
   }
 }
