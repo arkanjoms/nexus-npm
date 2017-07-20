@@ -7,7 +7,7 @@ module.exports = {
     publishRelease: function (releaseRegistry) {
 
         log.debug('publish release');
-        shell.exec('npm publish --registry ' + releaseRegistry);
+        shell.exec('npm publish --registry=' + releaseRegistry);
     },
     updatePkgVersion: function (appConfig, message) {
 
