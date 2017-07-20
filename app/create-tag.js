@@ -13,6 +13,7 @@ module.exports = {
         log.debug('Creating tag ' + tag);
         appConfig.packageJson.version = appConfig.packageJson.version.replace('-SNAPSHOT', '');
         fs.writeFileSync('package.json', JSON.stringify(appConfig.packageJson, null, 2));
+        fs.writeFileSync('version.txt', appConfig.packageJson.version);
 
         shell.exec('git commit --untracked=no -am "' + message.commitPrefix + message.createTagSufix + '"');
 

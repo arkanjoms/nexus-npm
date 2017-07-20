@@ -8,7 +8,7 @@ module.exports = {
     publishSnapshot: function (snapshotRepository) {
 
         log.info('publish snapshot => ' + snapshotRepository);
-        shell.exec('npm publish --registry ' + snapshotRepository);
+        shell.exec('npm publish --registry=' + snapshotRepository);
     },
     addDateToVersion: function (appConfig) {
 
