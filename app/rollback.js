@@ -8,6 +8,7 @@ module.exports = {
         log.info('Cleaning files.');
         fs.unlink('package.json.nxDeployBackup');
     },
+
     rollback: function () {
 
         log.info('Rollback files.');

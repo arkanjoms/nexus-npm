@@ -9,6 +9,7 @@ module.exports = {
         log.debug('publish release');
         shell.exec('npm publish --registry=' + releaseRegistry);
     },
+
     updatePkgVersion: function (appConfig, message) {
 
         var versionArray = appConfig.packageJson.version.split('.');
