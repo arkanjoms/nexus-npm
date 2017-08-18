@@ -13,20 +13,18 @@ commander.version('0.0.5')
 commander.command('verify')
     .description('Checks if the properties have been configured correctly.')
     .action(function () {
-            util.execCommand(function () {
-                commands.verify();
-            })
-        }
-    );
+        util.execCommand(function () {
+            commands.verify();
+        })
+    });
 
 commander.command('deploy')
     .description('Generates a new deploy.')
     .action(function () {
-            util.execCommand(function () {
-                commands.deploy();
-            })
-        }
-    );
+        util.execCommand(function () {
+            commands.deploy();
+        })
+    });
 
 commander.command('clean')
     .description('Clean temporary files.')
