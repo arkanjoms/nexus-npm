@@ -7,7 +7,7 @@ Node module to deploy artifact in sonatype nexus like maven-release-plugin.
 * Sonatype Nexus OSS with npm repository.
 * Valid user from Nexus.
 * Local machine authenticated with nexus.
-* User with permission to commit, push and commit in git repository.
+* User with permission to push and commit in git repository.
 
 #### Installation
 
