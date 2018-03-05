@@ -13,7 +13,7 @@ module.exports = {
 
     addDateToVersion: function (appConfig) {
 
-        var now = moment().format('YYYYMMDD.hhmmss');
+        var now = moment().format('YYYYMMDD.HHmmss');
         appConfig.packageJson.version = appConfig.packageJson.version + "." + now;
         fs.writeFileSync('package.json', JSON.stringify(appConfig.packageJson, null, 2));
     }
