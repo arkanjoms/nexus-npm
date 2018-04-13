@@ -1,8 +1,6 @@
-var commander = require('commander');
 var log = require('module-log');
 
 module.exports = {
-
     execCommand: function (fn) {
         var showError = function (err) {
             if (typeof err === 'string') {
@@ -11,6 +9,7 @@ module.exports = {
                 log.error(err.message);
             }
         };
+
         try {
             fn(showError);
         } catch (e) {

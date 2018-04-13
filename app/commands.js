@@ -1,4 +1,3 @@
-var path = require('path');
 var fs = require('fs-extra');
 var pr = require('properties-reader');
 var commander = require('commander');
@@ -10,7 +9,6 @@ var snapshot = require('./publish-snapshot');
 var rollback = require('./rollback');
 
 module.exports = {
-
     message: {
         commitPrefix: '[nexus-npm] -',
         createTagSufix: ' prepare tag ',
@@ -18,23 +16,18 @@ module.exports = {
         branchSufix: 'prepare branch ',
         rollback: 'rollback tag '
     },
-
     config: {
         tag: undefined,
         nextDevelopmentVersion: undefined,
         currentDevelopmentVersion: undefined
     },
-
     appConfig: {
         packageJson: {}
     },
-
     globalConfig: {
         properties: {}
     },
-
     verify: function () {
-
         this.loadConfig();
 
         var appName = this.appConfig.packageJson.name;
@@ -49,7 +42,6 @@ module.exports = {
         if (!appVersion.endsWith('-SNAPSHOT')) {
             throw "Version does not end with '-SNAPSHOT'!";
         }
-
         if (commander.release) {
             if (commander.tag === null || commander.tag === undefined) {
                 this.config.tag = this.appConfig.packageJson.version.replace('-SNAPSHOT', '');
@@ -57,26 +49,21 @@ module.exports = {
                 this.config.tag = commander.tag;
             }
         }
-
         log.debug('VALIDATION PASSED!');
     },
     loadConfig: function () {
-
         log.debug("Loading package.json");
         this.appConfig.packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
         log.debug("Loading ~/.npmrc");
         this.globalConfig.properties = pr(process.env.HOME + '/.npmrc');
     },
     backup: function () {
-
         log.debug('backup: package.json');
         fs.copySync('package.json', 'package.json.nxDeployBackup');
     },
     deploy: function () {
-
         this.verify();
         this.backup();
-
         if (commander.release) {
             tag.createTag(this.appConfig, this.config.tag, this.message);
             release.publishRelease(this.appConfig.packageJson.distributionManagement.releaseRegistry);
