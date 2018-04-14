@@ -1,7 +1,10 @@
 var log = require('module-log');
 
+var constants = require('./constants');
+
 module.exports = {
     execCommand: function (fn) {
+        log.debug(constants.appVersion);
         var showError = function (err) {
             if (typeof err === 'string') {
                 log.error(err);
