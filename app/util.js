@@ -1,9 +1,10 @@
-var commander = require('commander');
 var log = require('module-log');
 
-module.exports = {
+var constants = require('./constants');
 
+module.exports = {
     execCommand: function (fn) {
+        log.debug(constants.appVersion);
         var showError = function (err) {
             if (typeof err === 'string') {
                 log.error(err);
@@ -11,6 +12,7 @@ module.exports = {
                 log.error(err.message);
             }
         };
+
         try {
             fn(showError);
         } catch (e) {

@@ -3,13 +3,10 @@ var fs = require('fs-extra');
 var log = require('module-log');
 
 module.exports = {
-
     nxConfig: {
         generatedTag: ''
     },
-
     createTag: function (appConfig, tag, message) {
-
         log.debug('Creating tag ' + tag);
         appConfig.packageJson.version = appConfig.packageJson.version.replace('-SNAPSHOT', '');
         fs.writeFileSync('package.json', JSON.stringify(appConfig.packageJson, null, 2));
