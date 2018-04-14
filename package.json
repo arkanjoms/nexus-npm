@@ -12,7 +12,8 @@
     "nexus-npm": "nexus-npm.js"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha -w"
+    "test": "nyc --reporter=html --reporter=text mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,9 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "coveralls": "^3.0.0",
     "mocha": "^3.5.3",
+    "nyc": "^11.6.0",
     "should": "^11.2.1"
   }
 }
