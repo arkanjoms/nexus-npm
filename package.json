@@ -20,10 +20,10 @@
     "url": "git@github.com:arkanjoms/nexus-npm.git"
   },
   "dependencies": {
-    "commander": "^2.15.1",
+    "commander": "^2.19.0",
     "fs-extra": "^3.0.1",
     "module-log": "^1.0.1",
-    "moment": "^2.22.0",
+    "moment": "^2.22.2",
     "path": "^0.12.7",
     "properties-reader": "0.0.15",
     "shelljs": "^0.7.8",
@@ -33,10 +33,10 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "coveralls": "^3.0.0",
-    "mocha": "^3.5.3",
-    "nyc": "^11.6.0",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.2",
+    "mocha": "^5.2.0",
+    "nyc": "^11.9.0",
     "should": "^11.2.1"
   }
 }
