@@ -2,6 +2,7 @@ var fs = require('fs-extra');
 var pr = require('properties-reader');
 var commander = require('commander');
 var log = require('module-log');
+var shell = require('shelljs');
 
 var tag = require('./create-tag');
 var release = require('./publish-release');
@@ -64,16 +65,21 @@ module.exports = {
     deploy: function () {
         this.verify();
         this.backup();
+        var shellExitCode = 0;
         if (commander.release) {
             tag.createTag(this.appConfig, this.config.tag, this.message);
-            release.publishRelease(this.appConfig.packageJson.distributionManagement.releaseRegistry);
+            shellExitCode = release.publishRelease(this.appConfig.packageJson.distributionManagement.releaseRegistry);
             release.updatePkgVersion(this.appConfig, this.message);
             rollback.clean();
         } else {
             snapshot.addDateToVersion(this.appConfig);
-            snapshot.publishSnapshot(this.appConfig.packageJson.distributionManagement.snapshotRegistry);
+            shellExitCode = snapshot.publishSnapshot(this.appConfig.packageJson.distributionManagement.snapshotRegistry);
             rollback.rollback();
         }
+        if(shellExecCode !== 0) {
+			shell.echo("Error: npm publish failed.")
+			shell.exit(shellExitCode);
+		}
     },
     clean: function () {
         rollback.clean();
