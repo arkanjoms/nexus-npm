@@ -6,7 +6,7 @@ var log = require('module-log');
 module.exports = {
     publishSnapshot: function (snapshotRepository) {
         log.info('publish snapshot => ' + snapshotRepository);
-        shell.exec('npm publish --registry=' + snapshotRepository);
+        return shell.exec('npm publish --registry=' + snapshotRepository).code;
     },
 
     addDateToVersion: function (appConfig) {
