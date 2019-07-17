@@ -1,6 +1,6 @@
 {
   "name": "nexus-npm",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "description": "Sonatype Nexus deployer for npm, like maven-release-plugin",
   "author": "Rafael Ramos de Oliveira",
   "license": "MIT",
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "coveralls": "^3.0.4",
+    "coveralls": "^3.0.5",
     "mocha": "^5.2.0",
     "nyc": "^14.1.1",
     "should": "^11.2.1"
