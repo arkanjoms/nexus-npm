@@ -5,7 +5,7 @@ var log = require('module-log');
 module.exports = {
     publishRelease: function (releaseRegistry) {
         log.debug('publish release');
-        shell.exec('npm publish --registry=' + releaseRegistry);
+        return shell.exec('npm publish --registry=' + releaseRegistry).code;
     },
     updatePkgVersion: function (appConfig, message) {
         var versionArray = appConfig.packageJson.version.split('.');
