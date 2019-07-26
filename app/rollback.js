@@ -1,5 +1,5 @@
-var fs = require('fs-extra');
-var log = require('module-log');
+const fs = require('fs-extra');
+const log = require('module-log');
 
 module.exports = {
     clean: function () {
@@ -8,7 +8,7 @@ module.exports = {
     },
     rollback: function () {
         log.info('Rollback files.');
-        var packageJson = JSON.parse(fs.readFileSync('package.json.nxDeployBackup', 'utf8', function (err) {
+        const packageJson = JSON.parse(fs.readFileSync('package.json.nxDeployBackup', 'utf8', function (err) {
             if (err) throw err;
         }));
 

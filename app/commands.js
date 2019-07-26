@@ -1,13 +1,13 @@
-var fs = require('fs-extra');
-var pr = require('properties-reader');
-var commander = require('commander');
-var log = require('module-log');
-var shell = require('shelljs');
+const fs = require('fs-extra');
+const pr = require('properties-reader');
+const commander = require('commander');
+const log = require('module-log');
+const shell = require('shelljs');
 
-var tag = require('./create-tag');
-var release = require('./publish-release');
-var snapshot = require('./publish-snapshot');
-var rollback = require('./rollback');
+const tag = require('./create-tag');
+const release = require('./publish-release');
+const snapshot = require('./publish-snapshot');
+const rollback = require('./rollback');
 
 module.exports = {
     message: {
@@ -31,17 +31,17 @@ module.exports = {
     verify: function () {
         this.loadConfig();
 
-        var appName = this.appConfig.packageJson.name;
-        var appVersion = this.appConfig.packageJson.version;
+        const appName = this.appConfig.packageJson.name;
+        const appVersion = this.appConfig.packageJson.version;
 
         if (appName === null || appName === undefined) {
-            throw "App name is undefined!";
+            throw 'App name is undefined!';
         }
         if (appVersion === null || appVersion === undefined) {
-            throw "App version is undefined!";
+            throw 'App version is undefined!';
         }
         if (!appVersion.endsWith('-SNAPSHOT')) {
-            throw "Version does not end with '-SNAPSHOT'!";
+            throw 'Version does not end with \'-SNAPSHOT\'!';
         }
         if (commander.release) {
             if (commander.tag === null || commander.tag === undefined) {
@@ -53,9 +53,9 @@ module.exports = {
         log.debug('VALIDATION PASSED!');
     },
     loadConfig: function () {
-        log.debug("Loading package.json");
+        log.debug('Loading package.json');
         this.appConfig.packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-        log.debug("Loading ~/.npmrc");
+        log.debug('Loading ~/.npmrc');
         this.globalConfig.properties = pr(process.env.HOME + '/.npmrc');
     },
     backup: function () {
@@ -65,7 +65,7 @@ module.exports = {
     deploy: function () {
         this.verify();
         this.backup();
-        var shellExitCode = 0;
+        let shellExitCode = 0;
         if (commander.release) {
             tag.createTag(this.appConfig, this.config.tag, this.message);
             shellExitCode = release.publishRelease(this.appConfig.packageJson.distributionManagement.releaseRegistry);
@@ -76,10 +76,10 @@ module.exports = {
             shellExitCode = snapshot.publishSnapshot(this.appConfig.packageJson.distributionManagement.snapshotRegistry);
             rollback.rollback();
         }
-        if(shellExecCode !== 0) {
-			shell.echo("Error: npm publish failed.")
-			shell.exit(shellExitCode);
-		}
+        if (shellExitCode !== 0) {
+            shell.echo('Error: npm publish failed.')
+            shell.exit(shellExitCode);
+        }
     },
     clean: function () {
         rollback.clean();
