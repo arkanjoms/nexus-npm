@@ -1,2 +1,2 @@
-const appVersion = '0.0.8';
+const appVersion = '0.1.1';
 module.exports.appVersion = appVersion;

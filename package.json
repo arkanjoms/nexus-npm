@@ -1,6 +1,6 @@
 {
   "name": "nexus-npm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sonatype Nexus deployer for npm, like maven-release-plugin",
   "author": "Rafael Ramos de Oliveira",
   "license": "MIT",
@@ -12,8 +12,7 @@
     "nexus-npm": "nexus-npm.js"
   },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text mocha",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "test": "nyc --reporter=html --reporter=text mocha"
   },
   "repository": {
     "type": "git",
@@ -21,13 +20,13 @@
   },
   "dependencies": {
     "commander": "^2.20.0",
-    "fs-extra": "^3.0.1",
+    "fs-extra": "^8.1.0",
     "module-log": "^1.0.1",
     "moment": "^2.24.0",
     "path": "^0.12.7",
-    "properties-reader": "0.0.15",
-    "shelljs": "^0.7.8",
-    "yargs": "^8.0.2"
+    "properties-reader": "^0.3.1",
+    "shelljs": "^0.8.3",
+    "yargs": "^13.3.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -35,8 +34,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "coveralls": "^3.0.5",
-    "mocha": "^5.2.0",
+    "mocha": "^6.2.0",
     "nyc": "^14.1.1",
-    "should": "^11.2.1"
+    "should": "^13.2.3"
   }
 }

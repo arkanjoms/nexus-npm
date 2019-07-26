@@ -1,6 +1,6 @@
-var shell = require('shelljs');
-var fs = require('fs-extra');
-var log = require('module-log');
+const shell = require('shelljs');
+const fs = require('fs-extra');
+const log = require('module-log');
 
 module.exports = {
     nxConfig: {
@@ -12,9 +12,9 @@ module.exports = {
         fs.writeFileSync('package.json', JSON.stringify(appConfig.packageJson, null, 2));
         fs.writeFileSync('version.txt', appConfig.packageJson.version);
 
-        shell.exec('git commit --untracked=no -am "' + message.commitPrefix + message.createTagSufix + '"');
+        shell.exec(`git commit --untracked=no -am "${message.commitPrefix}${message.createTagSufix}"`);
 
-        if (shell.exec('git tag -a ' + tag + ' -m "' + message.commitPrefix + message.createTagSufix + '"').code !== 0) {
+        if (shell.exec(`git tag -a ${tag} -m "${message.commitPrefix}${message.createTagSufix}"`).code !== 0) {
             throw 'Tag error';
         }
         if (shell.exec('git push --tags').code !== 0) {
