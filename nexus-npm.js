@@ -1,15 +1,15 @@
 #!/usr/bin/env node
-var commander = require('commander');
+const commander = require('commander');
 
-var constants = require('./app/constants');
-var util = require('./app/util');
-var commands = require('./app/commands');
+const constants = require('./app/constants');
+const util = require('./app/util');
+const commands = require('./app/commands');
 
 commander.version(constants.appVersion)
     .option('-c, --commitPrefix [commigPrefix]', 'Prefix for commit message. Deafault is "[nexus-npm] -".')
     .option('-r, --release', 'Create new release.')
     .option('-t, --tag [tag]', 'New tag name. If not informed, the version of package.json will be used.')
-    .parse(process.argv);
+    .parse(global.process.argv);
 
 commander.command('verify')
     .description('Checks if the properties have been configured correctly.')
@@ -48,4 +48,4 @@ commander.command('*')
         console.log('\n  Parameter "%s" not found.\n\tUse --help to see commands list.\n', env);
     });
 
-commander.parse(process.argv);
+commander.parse(global.process.argv);
