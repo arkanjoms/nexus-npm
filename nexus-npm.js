@@ -6,7 +6,7 @@ const util = require('./app/util');
 const commands = require('./app/commands');
 
 commander.version(constants.appVersion)
-    .option('-c, --commitPrefix [commigPrefix]', 'Prefix for commit message. Deafault is "[nexus-npm] -".')
+    .option('-c, --commitPrefix [commigPrefix]', 'Prefix for commit message. Default is "[nexus-npm] -".')
     .option('-r, --release', 'Create new release.')
     .option('-t, --tag [tag]', 'New tag name. If not informed, the version of package.json will be used.')
     .parse(global.process.argv);
