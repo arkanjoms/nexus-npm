@@ -1,24 +1,33 @@
-var exec = require('child_process').exec;
-var path = require('path');
-var chai = require('chai');
-var expect = chai.expect;
-var rootDir = path.dirname(__dirname);
-var pathWithoutPackageJson = path.dirname(__dirname) + '/test';
+const {exec} = require('child_process');
+const path = require('path');
+const chai = require('chai');
+const expect = chai.expect;
+const rootDir = path.dirname(__dirname);
+const pathWithoutPackageJson = path.dirname(__dirname) + '/test';
+const pathExampleApp = path.dirname(__dirname) + '/test/example-app';
 
 describe('[verify]', function () {
 
-    it('package.json not present', function (done) {
-        exec('nexus-npm verify', {cwd: pathWithoutPackageJson}, function (error, stdout, stderr) {
-            console.log(pathWithoutPackageJson);
+    it('package.json not present', done => {
+        exec('node ../nexus-npm.js verify', {cwd: pathWithoutPackageJson}, (error, stdout) => {
             expect(error).to.not.null;
+            expect(stdout).contains('ENOENT: no such file or directory, open \'package.json\'');
             done();
         });
     });
 
-    it('package.json present', function (done) {
-        exec('nexus-npm verify', {cwd: rootDir}, function (error, stdout, stderr) {
+    it('app version contains \"-SNAPSHOT\"', done => {
+        exec('node nexus-npm.js verify', {cwd: rootDir}, (error, stdout) => {
             expect(error).to.not.null;
-            console.log(stdout);
+            expect(stdout).contains('Version does not end with \'-SNAPSHOT\'!');
+            done();
+        });
+    });
+
+    it('Configuration is OK', done => {
+        exec('node ./../../nexus-npm.js verify', {cwd: pathExampleApp}, (error, stdout) => {
+            expect(error).to.be.null;
+            expect(stdout).contains('VALIDATION PASSED!');
             done();
         });
     });
