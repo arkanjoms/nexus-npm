@@ -26,7 +26,8 @@ module.exports = {
         packageJson: {}
     },
     globalConfig: {
-        properties: {}
+        npmrcPath: undefined,
+        properties: {},
     },
     verify: function () {
         this.loadConfig();
@@ -55,8 +56,13 @@ module.exports = {
     loadConfig: function () {
         log.debug('Loading package.json');
         this.appConfig.packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-        log.debug('Loading ~/.npmrc');
-        this.globalConfig.properties = pr(process.env.HOME + '/.npmrc');
+        let npmrcPath = `${process.env.HOME}/.npmrc`;
+        if (commander.npmrcPath !== null && commander.npmrcPath !== undefined) {
+            npmrcPath = commander.npmrcPath
+        }
+        this.globalConfig.npmrcPath = npmrcPath
+        log.debug(`Loading ${npmrcPath}`);
+        this.globalConfig.properties = pr(npmrcPath);
     },
     backup: function () {
         log.debug('backup: package.json');
@@ -68,7 +74,7 @@ module.exports = {
         let shellExitCode = 0;
         if (commander.release) {
             tag.createTag(this.appConfig, this.config.tag, this.message);
-            shellExitCode = release.publishRelease(this.appConfig.packageJson.distributionManagement.releaseRegistry);
+            shellExitCode = release.publishRelease(this.appConfig.packageJson.distributionManagement.releaseRegistry, this.globalConfig.npmrcPath);
             release.updatePkgVersion(this.appConfig, this.message);
             rollback.clean();
         } else {

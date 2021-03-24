@@ -36,3 +36,15 @@ In the `package.json` add the string `-SNAPSHOT` in the version attribute , and 
 * `$ nexus-npm verify` - check if configuration is correct.
 * `$ nexus-npm clean` - removes generated files. 
 * `$ nexus-npm rollback` - rollback the package.json to last status before a deploy execution.
+
+#### Customizing `.npmrc` file
+To customize `.npmrc` file use `--npmrcPath` or `-p` param.
+
+Example
+```bash
+$ nexus-npm verify --npmrcPath /custom/path/.npmrc
+``` 
+or
+```bash
+$ nexus-npm verify -p /custom/path/.npmrc
+``` 

@@ -16,8 +16,16 @@ describe('[verify]', function () {
         });
     });
 
+    it('npmrc file not present', done => {
+        exec('node ./../../nexus-npm.js verify --npmrcPath notfoundnpmrcfile', {cwd: pathExampleApp}, (error, stdout) => {
+            expect(error).to.not.null;
+            expect(stdout).contains(`ENOENT: no such file or directory, open 'notfoundnpmrcfile'`);
+            done();
+        });
+    });
+
     it('app version contains \"-SNAPSHOT\"', done => {
-        exec('node nexus-npm.js verify', {cwd: rootDir}, (error, stdout) => {
+        exec('node nexus-npm.js verify --npmrcPath ./test/npmrctestfile', {cwd: rootDir}, (error, stdout) => {
             expect(error).to.not.null;
             expect(stdout).contains('Version does not end with \'-SNAPSHOT\'!');
             done();
@@ -25,7 +33,7 @@ describe('[verify]', function () {
     });
 
     it('Configuration is OK', done => {
-        exec('node ./../../nexus-npm.js verify', {cwd: pathExampleApp}, (error, stdout) => {
+        exec('node ./../../nexus-npm.js verify --npmrcPath ./../npmrctestfile', {cwd: pathExampleApp}, (error, stdout) => {
             expect(error).to.be.null;
             expect(stdout).contains('VALIDATION PASSED!');
             done();
