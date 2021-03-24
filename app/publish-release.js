@@ -3,9 +3,9 @@ const fs = require('fs-extra');
 const log = require('module-log');
 
 module.exports = {
-    publishRelease: function (releaseRegistry) {
-        log.debug('publish release');
-        return shell.exec('npm publish --registry=' + releaseRegistry).code;
+    publishRelease: function (releaseRegistry, configPath) {
+        log.debug(`publish release using userconfig file ${configPath}`);
+        return shell.exec(`npm --userconfig ${configPath} publish --registry=${releaseRegistry}`).code;
     },
     updatePkgVersion: function (appConfig, message) {
         const versionArray = appConfig.packageJson.version.split('.');
