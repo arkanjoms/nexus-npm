@@ -1,13 +1,41 @@
 const fs = require('fs-extra');
 const pr = require('properties-reader');
-const commander = require('commander');
 const log = require('module-log');
 const shell = require('shelljs');
 
+const program = require('./util').program;
 const tag = require('./create-tag');
 const release = require('./publish-release');
 const snapshot = require('./publish-snapshot');
 const rollback = require('./rollback');
+const config = require('./config');
+
+loadPackageJson = _ => {
+    log.debug('Loading package.json');
+    try {
+        config.pkgJson = fs.readJsonSync('./package.json');
+    } catch (err) {
+        log.error(err)
+    }
+}
+
+loadPackageJson();
+
+function isCustomTag() {
+    return program.opts().tag && program.opts().tag !== 'undefined';
+}
+
+function getTagName() {
+    return isCustomTag() ? program.opts().tag : config.pkgJson.version;
+}
+
+function isCustomCommitPrefix() {
+    return program.opts().commitPrefix && program.opts().commitPrefix !== 'undefined';
+}
+
+function getCommitPrefix() {
+    return isCustomCommitPrefix() ? program.opts().commitPrefix : this.message.commitPrefix;
+}
 
 module.exports = {
     message: {
@@ -22,18 +50,13 @@ module.exports = {
         nextDevelopmentVersion: undefined,
         currentDevelopmentVersion: undefined
     },
-    appConfig: {
-        packageJson: {}
-    },
-    globalConfig: {
-        npmrcPath: undefined,
-        properties: {},
-    },
-    verify: function () {
+    npmrcPath: undefined,
+    configProperties: {},
+    verify() {
         this.loadConfig();
 
-        const appName = this.appConfig.packageJson.name;
-        const appVersion = this.appConfig.packageJson.version;
+        const appName = config.pkgJson.name;
+        const appVersion = config.pkgJson.version;
 
         if (appName === null || appName === undefined) {
             throw 'App name is undefined!';
@@ -44,42 +67,42 @@ module.exports = {
         if (!appVersion.endsWith('-SNAPSHOT')) {
             throw 'Version does not end with \'-SNAPSHOT\'!';
         }
-        if (commander.release) {
-            if (commander.tag === null || commander.tag === undefined) {
-                this.config.tag = this.appConfig.packageJson.version.replace('-SNAPSHOT', '');
+        if (program.opts().release) {
+            if (program.opts().tag === null || program.opts().tag === undefined) {
+                this.config.tag = config.pkgJson.version.replace('-SNAPSHOT', '');
             } else {
-                this.config.tag = commander.tag;
+                this.config.tag = program.tag;
             }
         }
-        log.debug('VALIDATION PASSED!');
+        log.info('VALIDATION PASSED!');
     },
-    loadConfig: function () {
-        log.debug('Loading package.json');
-        this.appConfig.packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+    loadConfig() {
         let npmrcPath = `${process.env.HOME}/.npmrc`;
-        if (commander.npmrcPath !== null && commander.npmrcPath !== undefined) {
-            npmrcPath = commander.npmrcPath
+        if (program.opts().npmrcPath !== null && program.opts().npmrcPath !== undefined) {
+            npmrcPath = program.opts().npmrcPath
         }
-        this.globalConfig.npmrcPath = npmrcPath
+        this.npmrcPath = npmrcPath
         log.debug(`Loading ${npmrcPath}`);
-        this.globalConfig.properties = pr(npmrcPath);
+        this.configProperties = pr(npmrcPath);
     },
-    backup: function () {
+    backup() {
         log.debug('backup: package.json');
         fs.copySync('package.json', 'package.json.nxDeployBackup');
     },
-    deploy: function () {
+    deploy() {
         this.verify();
         this.backup();
         let shellExitCode = 0;
-        if (commander.release) {
-            tag.createTag(this.appConfig, this.config.tag, this.message);
-            shellExitCode = release.publishRelease(this.appConfig.packageJson.distributionManagement.releaseRegistry, this.globalConfig.npmrcPath);
-            release.updatePkgVersion(this.appConfig, this.message);
+        if (program.opts().release) {
+            const tagName = getTagName();
+            this.message.commitPrefix = getCommitPrefix();
+            tag.createTag(config.pkgJson, tagName, this.message);
+            shellExitCode = release.publishRelease(config.pkgJson.distributionManagement.releaseRegistry, this.npmrcPath);
+            release.updatePkgVersion(config.pkgJson, this.message);
             rollback.clean();
         } else {
-            snapshot.addDateToVersion(this.appConfig);
-            shellExitCode = snapshot.publishSnapshot(this.appConfig.packageJson.distributionManagement.snapshotRegistry);
+            snapshot.addDateToVersion(config.pkgJson);
+            shellExitCode = snapshot.publishSnapshot(config.pkgJson.distributionManagement.snapshotRegistry, this.npmrcPath);
             rollback.rollback();
         }
         if (shellExitCode !== 0) {
@@ -87,10 +110,10 @@ module.exports = {
             shell.exit(shellExitCode);
         }
     },
-    clean: function () {
+    clean() {
         rollback.clean();
     },
-    rollback: function () {
+    rollback() {
         rollback.rollback();
-    }
+    },
 };

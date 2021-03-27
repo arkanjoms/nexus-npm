@@ -5,13 +5,14 @@ const expect = chai.expect;
 const rootDir = path.dirname(__dirname);
 const pathWithoutPackageJson = path.dirname(__dirname) + '/test';
 const pathExampleApp = path.dirname(__dirname) + '/test/example-app';
+const packageJson = require(rootDir + '/package.json')
 
 describe('[verify]', function () {
 
     it('package.json not present', done => {
         exec('node ../nexus-npm.js verify', {cwd: pathWithoutPackageJson}, (error, stdout) => {
             expect(error).to.not.null;
-            expect(stdout).contains('ENOENT: no such file or directory, open \'package.json\'');
+            expect(stdout).contains('ENOENT: no such file or directory, open \'./package.json\'');
             done();
         });
     });
@@ -36,6 +37,14 @@ describe('[verify]', function () {
         exec('node ./../../nexus-npm.js verify --npmrcPath ./../npmrctestfile', {cwd: pathExampleApp}, (error, stdout) => {
             expect(error).to.be.null;
             expect(stdout).contains('VALIDATION PASSED!');
+            done();
+        });
+    });
+
+    it('check version is same in package.json', done => {
+        exec('node ./nexus-npm.js --version', {cwd: rootDir}, (error, stdout) => {
+            expect(error).to.be.null;
+            expect(stdout).contains(packageJson.version);
             done();
         });
     });

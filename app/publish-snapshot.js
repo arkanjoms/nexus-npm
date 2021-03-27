@@ -4,13 +4,13 @@ const fs = require('fs-extra');
 const log = require('module-log');
 
 module.exports = {
-    publishSnapshot: function (snapshotRepository) {
+    publishSnapshot: function (snapshotRepository, configPath) {
         log.info(`publish snapshot => ${snapshotRepository}`);
-        return shell.exec(`npm publish --registry=${snapshotRepository}`).code;
+        return shell.exec(`npm --userconfig ${configPath} publish --registry=${snapshotRepository}`).code;
     },
-    addDateToVersion: function (appConfig) {
+    addDateToVersion: function (pkgJson) {
         const now = moment().format('YYYYMMDD.HHmmss');
-        appConfig.packageJson.version = `${appConfig.packageJson.version}.${now}`;
-        fs.writeFileSync('package.json', JSON.stringify(appConfig.packageJson, null, 2));
+        pkgJson.version = `${pkgJson.version}.${now}`;
+        fs.writeFileSync('package.json', JSON.stringify(pkgJson, null, 2));
     }
 };

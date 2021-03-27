@@ -1,10 +1,11 @@
 const log = require('module-log');
+const {Command} = require('commander');
 
-const constants = require('./constants');
+const program = new Command();
 
 module.exports = {
-    execCommand: function (fn) {
-        log.debug(constants.appVersion);
+    program: program,
+    execCommand: fn => {
         const showError = function (err) {
             if (typeof err === 'string') {
                 log.error(err);
@@ -19,5 +20,5 @@ module.exports = {
             showError(e);
             process.exit(1);
         }
-    }
+    },
 };
