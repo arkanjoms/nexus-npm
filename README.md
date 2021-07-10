@@ -1,5 +1,11 @@
 # nexus-npm
 
+> Buy me a :coffee:
+> 
+> [![Donate with Ethereum](https://en.cryptobadges.io/badge/small/0x03A1905CfD61d8E00b90856588f737b88D7De636)](https://en.cryptobadges.io/donate/0x03A1905CfD61d8E00b90856588f737b88D7De636)
+
+---
+
 Node module to deploy artifact in sonatype nexus like maven-release-plugin.
 
 #### Requeriments
