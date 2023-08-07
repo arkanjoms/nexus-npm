@@ -14,7 +14,7 @@ Node module to deploy artifact in sonatype nexus like maven-release-plugin.
 #### Installation
 
 ```bash
-# npm install -g nexus-npm
+npm install -g nexus-npm
 ```
 
 ### Project configuration
@@ -44,13 +44,10 @@ To customize `.npmrc` file use `--npmrcPath` or `-p` param.
 
 Example
 ```bash
-$ nexus-npm verify --npmrcPath /custom/path/.npmrc
+nexus-npm verify --npmrcPath /custom/path/.npmrc
 ``` 
 or
 ```bash
-$ nexus-npm verify -p /custom/path/.npmrc
+nexus-npm verify -p /custom/path/.npmrc
 ``` 
 ___
-> Buy me a :coffee:
->
-> [![Donate with Ethereum](https://en.cryptobadges.io/badge/small/0x03A1905CfD61d8E00b90856588f737b88D7De636)](https://en.cryptobadges.io/donate/0x03A1905CfD61d8E00b90856588f737b88D7De636)
